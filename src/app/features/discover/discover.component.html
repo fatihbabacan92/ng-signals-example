@@ -1,0 +1,24 @@
+<h2>Discover Ghibli Films</h2>
+
+@if (ghibliApi.loading()) {
+<p>Loading...</p>
+} @else if (ghibliApi.error()) {
+<p>{{ ghibliApi.error() }}</p>
+} @else {
+@for (film of ghibliApi.films(); track film.id) {
+<div class="film">
+    <h3>{{ film.title }} ({{ film.release_date }})</h3>
+    <p>{{ film.description }}</p>
+
+    <button (click)="library.toggleWatchlist(film.id)">
+        {{ library.inWatchlist(film.id) ? 'Remove from' : 'Add to' }} Watchlist
+    </button>
+
+    <button (click)="library.toggleFavorite(film.id)">
+        {{ library.isFavorite(film.id) ? '★ Favorite' : '☆ Favorite' }}
+    </button>
+</div>
+} @empty {
+<p>No films found.</p>
+}
+}
