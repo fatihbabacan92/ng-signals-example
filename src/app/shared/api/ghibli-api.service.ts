@@ -1,19 +1,16 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Film } from '../interfaces/film.interface';
 
 @Injectable({ providedIn: 'root' })
 export class GhibliApiService {
+  private readonly http = inject(HttpClient);
   private readonly baseUrl = 'https://ghibliapi.vercel.app/films';
 
-  // signals to track loading/error/data
   public films = signal<Film[]>([]);
   public loading = signal(false);
   public error = signal<string | null>(null);
 
-  constructor(private http: HttpClient) {}
-
-  /** Fetch all films */
   public loadFilms(): void {
     this.loading.set(true);
 
@@ -23,7 +20,7 @@ export class GhibliApiService {
         this.films.set(res);
         this.loading.set(false);
       },
-      error: (err) => {
+      error: (err: Error) => {
         this.error.set(err.message ?? 'Unknown error');
         this.loading.set(false);
       },

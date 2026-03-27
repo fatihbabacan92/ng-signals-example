@@ -7,13 +7,21 @@ export class LibraryService {
 
   public toggleWatchlist(id: string): void {
     const next = new Set(this.watchlist());
-    next.has(id) ? next.delete(id) : next.add(id);
+    if (next.has(id)) {
+      next.delete(id);
+    } else {
+      next.add(id);
+    }
     this.watchlist.set(next);
   }
 
   public toggleFavorite(id: string): void {
     const next = new Set(this.favorites());
-    next.has(id) ? next.delete(id) : next.add(id);
+    if (next.has(id)) {
+      next.delete(id);
+    } else {
+      next.add(id);
+    }
     this.favorites.set(next);
   }
 
