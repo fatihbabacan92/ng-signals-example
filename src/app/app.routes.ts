@@ -7,14 +7,14 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/discover/discover.component').then((m) => m.DiscoverComponent),
   },
-  // {
-  //   path: 'watchlist',
-  //   loadComponent: () =>
-  //     import('./features/watchlist/watchlist.component').then((m) => m.WatchlistComponent),
-  // },
-  // {
-  //   path: 'favorites',
-  //   loadComponent: () =>
-  //     import('./features/favorites/favorites.component').then((m) => m.FavoritesComponent),
-  // },
+  {
+    path: 'watchlist',
+    loadComponent: () =>
+      import('./features/watchlist/watchlist.component').then((m) => m.WatchlistComponent),
+  },
+  {
+    path: 'favorites',
+    loadComponent: () =>
+      import('./features/favorites/favorites.component').then((m) => m.FavoritesComponent),
+  },
 ];
