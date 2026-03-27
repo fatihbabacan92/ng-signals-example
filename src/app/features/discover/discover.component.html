@@ -1,24 +1,60 @@
-<h2>Discover Ghibli Films</h2>
+<h2 class="mb-6 text-2xl font-bold text-gray-900">Discover Ghibli Films</h2>
 
 @if (ghibliApi.loading()) {
-  <p>Loading...</p>
+  <div class="flex items-center gap-2 text-gray-500">
+    <svg class="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+      <path
+        class="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+      />
+    </svg>
+    <span>Loading films...</span>
+  </div>
 } @else if (ghibliApi.error()) {
-  <p>{{ ghibliApi.error() }}</p>
+  <p class="rounded-md bg-red-50 p-4 text-red-700">{{ ghibliApi.error() }}</p>
 } @else {
-  @for (film of ghibliApi.films(); track film.id) {
-    <div class="mb-6 border-b border-gray-300 pb-4">
-      <h3>{{ film.title }} ({{ film.release_date }})</h3>
-      <p>{{ film.description }}</p>
-
-      <button class="mr-2" (click)="library.toggleWatchlist(film.id)">
-        {{ library.inWatchlist(film.id) ? 'Remove from' : 'Add to' }} Watchlist
-      </button>
-
-      <button (click)="library.toggleFavorite(film.id)">
-        {{ library.isFavorite(film.id) ? '★ Favorite' : '☆ Favorite' }}
-      </button>
-    </div>
-  } @empty {
-    <p>No films found.</p>
-  }
+  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    @for (film of ghibliApi.films(); track film.id) {
+      <div
+        class="flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition hover:shadow-md"
+      >
+        <img [src]="film.image" [alt]="film.title" class="h-64 w-full object-cover" />
+        <div class="flex flex-1 flex-col p-4">
+          <h3 class="text-lg font-semibold text-gray-900">{{ film.title }}</h3>
+          <p class="mt-1 text-sm text-gray-500">
+            {{ film.release_date }} · {{ film.running_time }} min · Score: {{ film.rt_score }}
+          </p>
+          <p class="mt-2 line-clamp-3 text-sm text-gray-600">{{ film.description }}</p>
+          <div class="mt-auto flex gap-2 pt-4">
+            <button
+              class="rounded-md px-3 py-1.5 text-sm font-medium transition"
+              [class]="
+                library.inWatchlist(film.id)
+                  ? 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              "
+              (click)="library.toggleWatchlist(film.id)"
+            >
+              {{ library.inWatchlist(film.id) ? '✓ Watchlist' : '+ Watchlist' }}
+            </button>
+            <button
+              class="rounded-md px-3 py-1.5 text-sm font-medium transition"
+              [class]="
+                library.isFavorite(film.id)
+                  ? 'bg-amber-100 text-amber-700 hover:bg-amber-200'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              "
+              (click)="library.toggleFavorite(film.id)"
+            >
+              {{ library.isFavorite(film.id) ? '★ Favorite' : '☆ Favorite' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    } @empty {
+      <p class="text-gray-500">No films found.</p>
+    }
+  </div>
 }
