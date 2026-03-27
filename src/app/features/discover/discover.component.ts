@@ -1,5 +1,5 @@
 import { Component, OnInit, effect } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { LibraryService } from '../../shared/services/library.service';
 import { GhibliApiService } from '../../shared/api/ghibli-api.service';
 
@@ -7,8 +7,7 @@ import { GhibliApiService } from '../../shared/api/ghibli-api.service';
   selector: 'app-discover',
   standalone: true,
   templateUrl: './discover.component.html',
-  styleUrls: ['./discover.component.scss'],
-  imports: [CommonModule],
+  imports: [],
 })
 export class DiscoverComponent implements OnInit {
   logFilms = effect(() => {
