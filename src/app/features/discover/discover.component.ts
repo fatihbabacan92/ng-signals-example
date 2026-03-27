@@ -5,7 +5,6 @@ import { GhibliApiService } from '../../shared/api/ghibli-api.service';
 
 @Component({
   selector: 'app-discover',
-  standalone: true,
   templateUrl: './discover.component.html',
   imports: [],
 })

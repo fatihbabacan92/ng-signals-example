@@ -1,8 +1,20 @@
 import { Routes } from '@angular/router';
-import { DiscoverComponent } from './features/discover/discover.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'discover', pathMatch: 'full' },
-  { path: 'discover', component: DiscoverComponent },
-  // watchlist & favorites pages will go here later
+  {
+    path: 'discover',
+    loadComponent: () =>
+      import('./features/discover/discover.component').then((m) => m.DiscoverComponent),
+  },
+  // {
+  //   path: 'watchlist',
+  //   loadComponent: () =>
+  //     import('./features/watchlist/watchlist.component').then((m) => m.WatchlistComponent),
+  // },
+  // {
+  //   path: 'favorites',
+  //   loadComponent: () =>
+  //     import('./features/favorites/favorites.component').then((m) => m.FavoritesComponent),
+  // },
 ];
